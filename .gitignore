@@ -1,0 +1,8 @@
+.DS_Store
+stanford-parser*
+build*
+dist*
+Lango.egg-info*
+_build*
+_templates*
+*.pyc
