@@ -135,7 +135,7 @@ the callback function with the context as arguments.
 ### Example
 
 Suppose we have the sentence "Sam ran to his house" and we wanted to match the
-subject ("Sam"), the object to ("his house") and the action ("ran"). 
+subject ("Sam"), the object ("his house") and the action ("ran"). 
 
 Sample parse tree for "Sam ran to his house" from the Stanford Parser. 
 
