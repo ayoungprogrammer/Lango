@@ -32,6 +32,7 @@ os.environ['STANFORD_MODELS'] = 'stanford-parser-full-2015-12-09'
 
 ## Docs
 
+- [Blog Post](http://blog.ayoungprogrammer.com/2016/07/natural-language-understanding-by.html/)
 - [Read the docs](http://lango.readthedocs.io/en/latest/)
 - [Examples](http://github.com/ayoungprogrammer/lango/tree/master/examples)
 
