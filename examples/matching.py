@@ -1,13 +1,10 @@
 from collections import OrderedDict
 import os
-from lango.parser import StanfordLibParser
+from lango.parser import StanfordServerParser
 from lango.matcher import match_rules
 
 
-os.environ['STANFORD_PARSER'] = 'stanford-parser-full-2015-12-09'
-os.environ['STANFORD_MODELS'] = 'stanford-parser-full-2015-12-09'
-
-parser = StanfordLibParser()
+parser = StanfordServerParser()
 
 sents = [
     'Call me an Uber.',
