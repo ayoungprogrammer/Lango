@@ -8,23 +8,22 @@ Install package with pip
 
     pip install lango
 
-Download Stanford Models and Parser
+Download Stanford CoreNLP
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Make sure you have Java installed for the Stanford parser to work.
+Make sure you have Java installed for the Stanford CoreNLP to work.
 
-`Download Stanford Parser`_
+`Download Stanford CoreNLP`_
 
-Set Environment Variables
+Extract to any folder
+
+Run Server
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Set environment variables for STANFORD\_PARSER and STANFORD\_MODELS to
-where you downloaded the parser.
+In extracted folder, run the following command to start the server:
 
-.. code:: python
+::
 
-    import os
-    os.environ['STANFORD_PARSER'] = 'stanford-parser-full-2015-12-09'
-    os.environ['STANFORD_MODELS'] = 'stanford-parser-full-2015-12-09'
+    java -mx4g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer
 
-.. _Download Stanford Parser: http://nlp.stanford.edu/software/stanford-parser-full-2015-12-09.zip
+.. _Download Stanford CoreNLP: http://stanfordnlp.github.io/CoreNLP/#download

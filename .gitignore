@@ -1,5 +1,6 @@
 .DS_Store
 stanford-parser*
+stanford-corenlp*
 build*
 dist*
 Lango.egg-info*

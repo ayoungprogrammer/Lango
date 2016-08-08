@@ -13,21 +13,19 @@ Lango is a natural language processing library for working with the building blo
 pip install lango
 ```
 
-### Download Stanford Models and Parser
+### Download Stanford CoreNLP
 
-Make sure you have Java installed for the Stanford parser to work.
+Make sure you have Java installed for the Stanford CoreNLP to work.
 
-[Download Stanford Parser](http://nlp.stanford.edu/software/stanford-parser-full-2015-12-09.zip)
+[Download Stanford CoreNLP](http://stanfordnlp.github.io/CoreNLP/#download)
 
-### Set Environment Variables
+Extract to any folder
 
-Set environment variables for STANFORD_PARSER and STANFORD_MODELS to where you
-downloaded the parser.
+### Run the Stanford CoreNLP server
 
-```python
-import os
-os.environ['STANFORD_PARSER'] = 'stanford-parser-full-2015-12-09'
-os.environ['STANFORD_MODELS'] = 'stanford-parser-full-2015-12-09'
+Run the following command in the folder where you extracted Stanford CoreNLP
+```
+java -mx4g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer
 ```
 
 ## Docs
@@ -218,10 +216,10 @@ Returned context:
 Full code:
 
 ```python
-from lango.parser import StanfordLibParser
+from lango.parser import StanfordServerParser
 from lango.matcher import match_rules
 
-parser = StanfordLibParser()
+parser = StanfordServerParser()
 
 rules = {
   '( S ( NP:np ) ( VP ( VBD:action-o ) ( PP:pp ) ) )': {

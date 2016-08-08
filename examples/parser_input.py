@@ -1,12 +1,9 @@
 import os
-from lango.parser import StanfordLibParser
+from lango.parser import StanfordServerParser
 from lango.matcher import match_rules
 
-os.environ['STANFORD_PARSER'] = 'stanford-parser-full-2015-12-09'
-os.environ['STANFORD_MODELS'] = 'stanford-parser-full-2015-12-09'
-
 def main():
-    parser = StanfordLibParser()
+    parser = StanfordServerParser()
     while True:
         try:
             line = raw_input("Enter line: ")
