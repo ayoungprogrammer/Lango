@@ -45,18 +45,23 @@ class StanfordLibParser(OldStanfordLibParser):
 
 class StanfordServerParser(Parser, GenericStanfordParser):
     """Follow the readme to setup the Stanford CoreNLP server"""
-    def __init__(self, host='localhost', port=9000):
+    def __init__(self, host='localhost', port=9000, properties={}):
         url = 'http://{0}:{1}'.format(host, port)
         self.nlp = StanfordCoreNLP(url)
+
+        if not properties:
+            self.properties = {
+                'annotators': 'parse',
+                'outputFormat': 'json',
+            }
+        else:
+            self.properties = properties
 
     def _make_tree(self, result):
         return Tree.fromstring(result)
 
     def parse(self, sent):
-        output = self.nlp.annotate(sent, properties={
-            'annotators': 'parse',
-            'outputFormat': 'json'
-        })
+        output = self.nlp.annotate(sent, properties=self.properties)
 
         # Got random html, return empty tree
         if isinstance(output, unicode):
