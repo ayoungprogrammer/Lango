@@ -96,9 +96,8 @@ def match_tokens(tree, tokens, args):
         Boolean if they match or not
     """
     arg_type_to_func = {
-        'w': get_word,
         'o': get_object,
-        'p': get_proper_word,
+        'r': get_raw,
     }
 
     if len(tokens) == 0:
@@ -113,7 +112,7 @@ def match_tokens(tree, tokens, args):
     if root_token.find('=') >= 0:
         eq_tokens = root_token.split('=')[1].lower().split('|')
         root_token = root_token.split('=')[0]
-        word = get_word(tree)
+        word = get_raw(tree)
         if word not in eq_tokens:
             return False
 
@@ -206,26 +205,9 @@ def get_object(tree):
         return tree.lower()
 
 
-def get_word(tree):
+def get_raw(tree):
     """Get the exact words in lowercase in the tree object.
     
-    Args:
-        tree (Tree): Parsed tree structure
-    Returns:
-        Resulting string of tree ``(Ex: "the red car")``
-    """
-    if isinstance(tree, Tree):
-        words = []
-        for child in tree:
-            words.append(get_word(child))
-        return ' '.join(words)
-    else:
-        return tree.lower()
-
-
-def get_proper_word(tree):
-    """Get unmodified words in the tree object
-
     Args:
         tree (Tree): Parsed tree structure
     Returns:
@@ -234,7 +216,7 @@ def get_proper_word(tree):
     if isinstance(tree, Tree):
         words = []
         for child in tree:
-            words.append(get_proper_word(child))
+            words.append(get_raw(child))
         return ' '.join(words)
     else:
         return tree
