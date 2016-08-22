@@ -84,10 +84,10 @@ def match_tokens(tree, tokens, args):
 
         ':label': Label a token, the token will be returned as part of the context with key 'label'.
         '-@': Additional single letter argument determining return format of labeled token. Valid options are:
-            '-w': Return token as word
+            '-r': Return token as word
             '-o': Return token as object
-        '=word|word2|....|wordn': Force match the token words
-        '$': Force match the number of tokens
+        '=word|word2|....|wordn': Force match raw lower case
+        '$': Match end of tree
 
     Args:
         tree : Parsed tree structure
@@ -96,8 +96,10 @@ def match_tokens(tree, tokens, args):
         Boolean if they match or not
     """
     arg_type_to_func = {
-        'o': get_object,
-        'r': get_raw,
+        'r': get_raw_lower,
+        'R': get_raw,
+        'o': get_object_lower,
+        'O': get_object,
     }
 
     if len(tokens) == 0:
@@ -112,7 +114,7 @@ def match_tokens(tree, tokens, args):
     if root_token.find('=') >= 0:
         eq_tokens = root_token.split('=')[1].lower().split('|')
         root_token = root_token.split('=')[0]
-        word = get_raw(tree)
+        word = get_raw_lower(tree)
         if word not in eq_tokens:
             return False
 
@@ -202,7 +204,11 @@ def get_object(tree):
             words.append(get_object(child))
         return ' '.join(filter(None, words))
     else:
-        return tree.lower()
+        return tree
+
+
+def get_object_lower(tree):
+    return get_object(tree).lower()
 
 
 def get_raw(tree):
@@ -220,3 +226,7 @@ def get_raw(tree):
         return ' '.join(words)
     else:
         return tree
+
+
+def get_raw_lower(tree):
+    return get_raw(tree).lower()
