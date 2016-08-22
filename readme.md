@@ -1,9 +1,13 @@
 # Lango
 
+[![Gitter](https://badges.gitter.im/lango-nlp/Lobby.svg)](https://gitter.im/lango-nlp/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 Lango is a natural language processing library for working with the building blocks of language. It includes tools for:
 
 * matching [constituent parse trees](https://en.wikipedia.org/wiki/Parse_tree#Constituency-based_parse_trees). 
 * modeling conversations (TODO)
+
+Need help? Ask me for help on [Gitter](https://gitter.im/lango-nlp/Lobby)
 
 ## Installation
 
@@ -63,23 +67,24 @@ Example:
 
 ### Token
 
-A token is a string comprising of a tag and modifiers/labels for matching. We specify a match_label to match the tag to. We can specify opts for extracting the string from a tree. We can specify eq for 
-matching the tree to a string.
-We can also specify to match
-
-opts:
-- -o Get object (remove the, a, an)
-- -w Get whole tree in lower case
-- -p Get whole word in same case
+A token is a string comprising of a tag and modifiers/labels for matching. We specify a match_label to match the tag to. We can specify opts for extracting the string from a tree. We can specify eq for matching the tree to a string.
 
 ```
-Format:
-token = tag:match_label-opts
+Example string:
+The red car
+
+opts:
+-o Get object by removing "a", "the", etc. (Ex. red car)
+-r Get raw string (Ex. The red car)
+```
+
+```
+Format: (only tag is required)
 token = tag:match_label-opts=eq
 
 Example: 
-'NP:subject-o'
 'VP'
+'NP:subject-o'
 'NP:np'
 'VP=run'
 'VP:action=run'

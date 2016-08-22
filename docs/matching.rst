@@ -30,17 +30,28 @@ the Stanford Parser can be found `here`_.
 Token
 ~~~~~
 
-A token is a string comprising of a tag with modifiers/options.
+A token is a string comprising of a tag and modifiers/labels for matching. We specify a match_label to match the tag to. We can specify opts for extracting the string from a tree. We can specify eq for matching the tree to a string.
 
 ::
 
-    Format:
-    token = tag:match_label-opts
+    Example string:
+    The red car
+    
+    opts 
+    -o Get object by removing "a", "the", etc. (Ex. red car)
+    -r Get raw string (Ex. The red car)
+::
+
+    Format: (only tag is required)
+    token = tag:match_label-opts=eq
+
 
     Example: 
-    'NP:subject-o'
     'VP'
+    'NP:subject-o'
     'NP:np'
+    'VP=run'
+    'VP:action=run'
 
 Token Tree
 ~~~~~~~~~~

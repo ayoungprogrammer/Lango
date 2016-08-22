@@ -31,9 +31,9 @@ subj_obj_rules = {
     ]),
     'obj_t': OrderedDict([
         # pizza with onions
-        ('( NP ( NP:item-o ) ( PP ( IN:item_in-o ) ( NP:item_addon-o ) ) )', {}),
+        ('( NP ( NP:item-o ) ( PP ( IN:item_in-r ) ( NP:item_addon-r ) ) )', {}),
         # pizza
-        ('( NP:item-o )', {}),
+        ('( NP:item-r )', {}),
     ])
 }
 
