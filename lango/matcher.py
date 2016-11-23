@@ -27,8 +27,6 @@ def match_rules(tree, rules, fun=None, multi=False):
         if not context:
             return None
 
-    print 'contexts:', [c.keys() for c in context]
-
     if fun:
         args = fun.__code__.co_varnames
         if multi:
@@ -105,9 +103,6 @@ def match_rules_context_multi(tree, rules, parent_context={}):
         dict: Context matched dictionary of matched rules or
         None if no match
     """
-
-    print rules.keys()[0], parent_context.keys()
-
     all_contexts = []
     for template, match_rules in rules.iteritems():
         context = parent_context.copy()
