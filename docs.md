@@ -14,3 +14,8 @@ cd docs
 make html
 ```
 
+## Development
+
+```
+python setup.py develop
+```

@@ -3,7 +3,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-def match_rules(tree, rules, fun):
+def match_rules(tree, rules, fun=None, multi=False):
     """Matches a Tree structure with the given query rules.
 
     Query rules are represented as a dictionary of template to action.
@@ -15,21 +15,39 @@ def match_rules(tree, rules, fun):
     Args:
         tree (Tree): Parsed tree structure
         rules (dict): A dictionary of query rules
-        fun: Function to call
+        fun (function): Function to call with context (set to None if you want to return context)
+        multi (Bool): If True, returns all matched contexts, else returns first matched context
     Returns:
-        Result of function call with context
-        or
-        None if nothing matched
+        Contexts from matched rules
     """
-    context = match_rules_context(tree, rules)
-    if not context:
-        return None
-    args = fun.__code__.co_varnames
-    action_context = {}
-    for arg in args:
-        if arg in context:
-            action_context[arg] = context[arg]
-    return fun(**action_context)
+    if multi:
+        context = match_rules_context_multi(tree, rules)
+    else:
+        context = match_rules_context(tree, rules)
+        if not context:
+            return None
+
+    print 'contexts:', [c.keys() for c in context]
+
+    if fun:
+        args = fun.__code__.co_varnames
+        if multi:
+            res = []
+            for c in context:
+                action_context = {}
+                for arg in args:
+                    if arg in c:
+                        action_context[arg] = c[arg]
+                res.append(fun(**action_context))
+            return res
+        else:
+            action_context = {}
+            for arg in args:
+                if arg in context:
+                    action_context[arg] = context[arg]
+            return fun(**action_context)
+    else:
+        return context
 
 def match_rules_context(tree, rules, parent_context={}):
     """Recursively matches a Tree structure with rules and returns context
@@ -46,15 +64,62 @@ def match_rules_context(tree, rules, parent_context={}):
         context = parent_context.copy()
         if match_template(tree, template, context):
             for key, child_rules in match_rules.iteritems():
-                child_context = match_rules_context(context[key],
-                    child_rules, context)
+                child_context = match_rules_context(context[key], child_rules, context)
                 if child_context:
-                    for k,v in child_context.iteritems():
+                    for k, v in child_context.iteritems():
                         context[k] = v
                 else:
                     return None
             return context
     return None
+
+def cross_context(contextss):
+    """
+    Cross product of all contexts
+    [[a], [b], [c]] -> [[a] x [b] x [c]]
+
+    """
+    if not contextss:
+        return []
+
+    product = [{}]
+
+    for contexts in contextss:
+        tmp_product = []
+        for c in contexts:
+            for ce in product:
+                c_copy = c.copy()
+                c_copy.update(ce)
+                tmp_product.append(c_copy)
+        product = tmp_product
+    return product
+
+def match_rules_context_multi(tree, rules, parent_context={}):
+    """Recursively matches a Tree structure with rules and returns context
+
+    Args:
+        tree (Tree): Parsed tree structure
+        rules (dict): See match_rules
+        parent_context (dict): Context of parent call
+    Returns:
+        dict: Context matched dictionary of matched rules or
+        None if no match
+    """
+
+    print rules.keys()[0], parent_context.keys()
+
+    all_contexts = []
+    for template, match_rules in rules.iteritems():
+        context = parent_context.copy()
+        if match_template(tree, template, context):
+            child_contextss = []
+            if not match_rules:
+                all_contexts += [context]
+            else:
+                for key, child_rules in match_rules.iteritems():
+                    child_contextss.append(match_rules_context_multi(context[key], child_rules, context))
+                all_contexts += cross_context(child_contextss)    
+    return all_contexts
 
 def match_template(tree, template, args=None):
     """Check if match string matches Tree structure
