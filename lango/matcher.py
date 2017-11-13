@@ -58,13 +58,13 @@ def match_rules_context(tree, rules, parent_context={}):
         dict: Context matched dictionary of matched rules or
         None if no match
     """
-    for template, match_rules in rules.iteritems():
+    for template, match_rules in rules.items():
         context = parent_context.copy()
         if match_template(tree, template, context):
-            for key, child_rules in match_rules.iteritems():
+            for key, child_rules in match_rules.items():
                 child_context = match_rules_context(context[key], child_rules, context)
                 if child_context:
-                    for k, v in child_context.iteritems():
+                    for k, v in child_context.items():
                         context[k] = v
                 else:
                     return None
@@ -104,14 +104,14 @@ def match_rules_context_multi(tree, rules, parent_context={}):
         None if no match
     """
     all_contexts = []
-    for template, match_rules in rules.iteritems():
+    for template, match_rules in rules.items():
         context = parent_context.copy()
         if match_template(tree, template, context):
             child_contextss = []
             if not match_rules:
                 all_contexts += [context]
             else:
-                for key, child_rules in match_rules.iteritems():
+                for key, child_rules in match_rules.items():
                     child_contextss.append(match_rules_context_multi(context[key], child_rules, context))
                 all_contexts += cross_context(child_contextss)    
     return all_contexts
@@ -129,7 +129,7 @@ def match_template(tree, template, args=None):
     cur_args = {}
     if match_tokens(tree, tokens, cur_args):
         if args is not None:
-            for k, v in cur_args.iteritems():
+            for k, v in cur_args.items():
                 args[k] = v
         logger.debug('MATCHED: {0}'.format(template))
         return True
@@ -205,7 +205,7 @@ def match_tokens(tree, tokens, args):
     if len(tree) < len(tokens) - 1:
         return False
 
-    for i in xrange(len(tokens) - 1):
+    for i in range(len(tokens) - 1):
         if not match_tokens(tree[i], tokens[i + 1], args):
             return False
     return True
@@ -223,7 +223,7 @@ def get_tokens(tokens):
     ret = []
     start = 0
     stack = 0
-    for i in xrange(len(tokens)):
+    for i in range(len(tokens)):
         if tokens[i] == '(':
             if stack == 0:
                 start = i
@@ -262,7 +262,7 @@ def get_object(tree):
         words = []
         for child in tree:
             words.append(get_object(child))
-        return ' '.join(filter(None, words))
+        return ' '.join([_f for _f in words if _f])
     else:
         return tree
 

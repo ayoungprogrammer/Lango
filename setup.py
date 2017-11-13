@@ -1,8 +1,9 @@
 from setuptools import find_packages, setup
+import lango
 
 setup(
     name='Lango',
-    version='0.20.1',
+    version=lango.__version__,
     description='Natural Language Framework for Matching Parse Trees and Modeling Conversation',
     packages=find_packages(),
     author='Michael Young',

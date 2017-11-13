@@ -64,7 +64,7 @@ class StanfordServerParser(Parser, GenericStanfordParser):
         output = self.nlp.annotate(sent, properties=self.properties)
 
         # Got random html, return empty tree
-        if isinstance(output, unicode):
+        if isinstance(output, str):
             return Tree('', [])
 
         parse_output = output['sentences'][0]['parse'] + '\n\n'

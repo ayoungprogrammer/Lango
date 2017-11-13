@@ -1,8 +1,8 @@
+
 from collections import OrderedDict
 import os
 from lango.parser import StanfordServerParser
 from lango.matcher import match_rules
-
 
 parser = StanfordServerParser()
 
@@ -30,7 +30,7 @@ for sent in sents:
     tree = parser.parse(sent)
     contexts = match_rules(tree, rules, multi=True)
     for context in contexts:
-        print ", ".join(['%s:%s' % (k, context.get(k)) for k in keys])
+        print(", ".join(['%s:%s' % (k, context.get(k)) for k in keys]))
 
 """
 5 possible matches:

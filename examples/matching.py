@@ -1,7 +1,9 @@
+
 from collections import OrderedDict
 import os
 from lango.parser import StanfordServerParser
 from lango.matcher import match_rules
+
 
 
 parser = StanfordServerParser()
@@ -9,7 +11,7 @@ parser = StanfordServerParser()
 sents = [
     'Call me an Uber.',
     'Get my mother some flowers.',
-    'Order me a pizza with extra cheese.',
+    'Find me a pizza with extra cheese.',
     'Give Sam\'s dog a biscuit from Petshop.'
 ]
 
@@ -61,4 +63,4 @@ def perform_action(action, item, subject, relation=None,
 
 for sent in sents:
     tree = parser.parse(sent)
-    print match_rules(tree, rules, perform_action)
+    print(match_rules(tree, rules, perform_action))
